@@ -8,7 +8,7 @@
 CC = gcc
 AR = ar
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -MMD -MP
 
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g
@@ -37,6 +37,8 @@ inc := $(wildcard $(src_dir)/*.h)
 #replacement: The replacement string, which may also contain a %.
 #text: The text to search for matches.
 objs := $(patsubst $(src_dir)/%.c, $(obj_dir)/%.o, $(src))
+
+dep := $(objs:.o=.d)
 
 #implicit run when we call make cmd
 #default target is object files
@@ -79,4 +81,8 @@ $(inc_dir):
 	mkdir -p $(inc_dir)
 
 clean:
-	rm -rf $(obj_dir) $(tar_dir) $(inc_dir) 
+	rm -rf $(obj_dir) $(tar_dir) $(inc_dir)
+
+-include $(dep)
+
+.PHONY: all clean 

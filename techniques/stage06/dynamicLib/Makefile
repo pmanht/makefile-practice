@@ -71,7 +71,7 @@ $(target): $(objs) | $(tar_dir) $(inc_dir)
 #normal prerequisite.
 
 $(obj_dir)/%.o: $(src_dir)/%.c | $(obj_dir)
-	gcc $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(obj_dir):
 	mkdir -p $(obj_dir)
